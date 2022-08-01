@@ -1,0 +1,15 @@
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vs/
+
+# Parcel
+.parcel-cache/
+
+# Ignore test files
+test/
+
+# Ignore node_modules
+node_modules/

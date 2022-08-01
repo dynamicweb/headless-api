@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+      "module": "ES2022",
+      "moduleResolution": "Node",
+      "lib": ["ES2022", "DOM"],
+      "declaration": true,
+      "noImplicitAny": true,
+      "removeComments": true,
+      "preserveConstEnums": true,
+      "outDir": "dist",
+      "sourceMap": true
+    },
+    // "include": ["src/WebApi.ts", "src/Content.ts", "src/Ecommerce.ts"],
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "**/*.spec.ts"]
+  }
