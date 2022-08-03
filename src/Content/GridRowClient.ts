@@ -22,7 +22,7 @@ export class GridRowClient extends ClientBase {
      * @param device (optional) The device type - one of 'Desktop' (default), 'Mobile', 'Tablet'
      * @return OK
      */
-    getById(pageId: number, device: DeviceType | null | undefined): Promise<GridRowViewModel> {
+    getById(pageId: number, device: DeviceType | null | undefined): Promise<GridRowViewModel[]> {
         let url_ = this.baseUrl + "/dwapi/content/rows/{pageId}?";
         if (pageId === undefined || pageId === null)
             throw new Error("The parameter 'pageId' must be defined.");
@@ -43,14 +43,21 @@ export class GridRowClient extends ClientBase {
         });
     }
 
-    protected processGetById(response: Response): Promise<GridRowViewModel> {
+    protected processGetById(response: Response): Promise<GridRowViewModel[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = GridRowViewModel.fromJS(resultData200);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(GridRowViewModel.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
             return result200;
             });
         } else if (status === 404) {
@@ -66,7 +73,7 @@ export class GridRowClient extends ClientBase {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<GridRowViewModel>(null as any);
+        return Promise.resolve<GridRowViewModel[]>(null as any);
     }
 
     /**
@@ -75,7 +82,7 @@ export class GridRowClient extends ClientBase {
      * @param hostname (optional) Specify the hostname setup on the website to match with. If none is specified, the request hostname is used for lookup
      * @return OK
      */
-    getByUrl(url: string | null, hostname: string | null | undefined): Promise<ParagraphInfoViewModel[]> {
+    getByUrl(url: string | null, hostname: string | null | undefined): Promise<GridRowViewModel[]> {
         let url_ = this.baseUrl + "/dwapi/content/rows/url?";
         if (url === undefined)
             throw new Error("The parameter 'url' must be defined.");
@@ -97,7 +104,7 @@ export class GridRowClient extends ClientBase {
         });
     }
 
-    protected processGetByUrl(response: Response): Promise<ParagraphInfoViewModel[]> {
+    protected processGetByUrl(response: Response): Promise<GridRowViewModel[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -107,7 +114,7 @@ export class GridRowClient extends ClientBase {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(ParagraphInfoViewModel.fromJS(item));
+                    result200!.push(GridRowViewModel.fromJS(item));
             }
             else {
                 result200 = <any>null;
@@ -127,6 +134,6 @@ export class GridRowClient extends ClientBase {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<ParagraphInfoViewModel[]>(null as any);
+        return Promise.resolve<GridRowViewModel[]>(null as any);
     }
 }
