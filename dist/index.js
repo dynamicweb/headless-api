@@ -1223,7 +1223,6 @@ class $21986d3c2ce0bf68$export$f63e98f49938fb87 extends (0, $0b2832c981de5e4c$ex
 }
 
 
-
 class $f611b94d3fd43f9d$export$5cfee608d429befb extends (0, $b61db8281f049cc2$export$8f6e4be34af2779b) {
     jsonParseReviver = undefined;
     constructor(configuration, baseUrl, http){
@@ -1259,7 +1258,10 @@ class $f611b94d3fd43f9d$export$5cfee608d429befb extends (0, $b61db8281f049cc2$ex
         if (status === 200) return response.text().then((_responseText)=>{
             let result200 = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = (0, $21986d3c2ce0bf68$export$f63e98f49938fb87).fromJS(resultData200);
+            if (Array.isArray(resultData200)) {
+                result200 = [];
+                for (let item of resultData200)result200.push((0, $21986d3c2ce0bf68$export$f63e98f49938fb87).fromJS(item));
+            } else result200 = null;
             return result200;
         });
         else if (status === 404) return response.text().then((_responseText)=>{
@@ -1303,7 +1305,7 @@ class $f611b94d3fd43f9d$export$5cfee608d429befb extends (0, $b61db8281f049cc2$ex
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             if (Array.isArray(resultData200)) {
                 result200 = [];
-                for (let item of resultData200)result200.push((0, $0c842e52b6a3d989$export$cf52083a8935362b).fromJS(item));
+                for (let item of resultData200)result200.push((0, $21986d3c2ce0bf68$export$f63e98f49938fb87).fromJS(item));
             } else result200 = null;
             return result200;
         });

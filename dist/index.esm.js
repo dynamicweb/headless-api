@@ -1216,7 +1216,6 @@ class $1a430d75587022ee$export$f63e98f49938fb87 extends (0, $da113e3412d10fe0$ex
 }
 
 
-
 class $0b8922466999951b$export$5cfee608d429befb extends (0, $ec0f87cb64500431$export$8f6e4be34af2779b) {
     jsonParseReviver = undefined;
     constructor(configuration, baseUrl, http){
@@ -1252,7 +1251,10 @@ class $0b8922466999951b$export$5cfee608d429befb extends (0, $ec0f87cb64500431$ex
         if (status === 200) return response.text().then((_responseText)=>{
             let result200 = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = (0, $1a430d75587022ee$export$f63e98f49938fb87).fromJS(resultData200);
+            if (Array.isArray(resultData200)) {
+                result200 = [];
+                for (let item of resultData200)result200.push((0, $1a430d75587022ee$export$f63e98f49938fb87).fromJS(item));
+            } else result200 = null;
             return result200;
         });
         else if (status === 404) return response.text().then((_responseText)=>{
@@ -1296,7 +1298,7 @@ class $0b8922466999951b$export$5cfee608d429befb extends (0, $ec0f87cb64500431$ex
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             if (Array.isArray(resultData200)) {
                 result200 = [];
-                for (let item of resultData200)result200.push((0, $7b57ad9fc7948799$export$cf52083a8935362b).fromJS(item));
+                for (let item of resultData200)result200.push((0, $1a430d75587022ee$export$f63e98f49938fb87).fromJS(item));
             } else result200 = null;
             return result200;
         });

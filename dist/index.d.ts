@@ -301,10 +301,10 @@ declare class GridRowClient extends ClientBase {
     constructor(configuration: ClientConfiguration, baseUrl?: string, http?: {
         fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
     });
-    getById(pageId: number, device: DeviceType | null | undefined): Promise<GridRowViewModel>;
-    protected processGetById(response: Response): Promise<GridRowViewModel>;
-    getByUrl(url: string | null, hostname: string | null | undefined): Promise<ParagraphInfoViewModel[]>;
-    protected processGetByUrl(response: Response): Promise<ParagraphInfoViewModel[]>;
+    getById(pageId: number, device: DeviceType | null | undefined): Promise<GridRowViewModel[]>;
+    protected processGetById(response: Response): Promise<GridRowViewModel[]>;
+    getByUrl(url: string | null, hostname: string | null | undefined): Promise<GridRowViewModel[]>;
+    protected processGetByUrl(response: Response): Promise<GridRowViewModel[]>;
 }
 declare class NavigationTreeNodeViewModel extends ViewModelBase {
     pageId?: number;
