@@ -1,7 +1,17 @@
 class $ec0f87cb64500431$export$8f6e4be34af2779b {
-    constructor(configuration){}
-    getBaseUrl(input, baseUrl) {
-        return baseUrl || "";
+    constructor(baseUrl, token){
+        this.baseUrl = baseUrl;
+        this.token = token;
+    }
+    fetch(url, init) {
+        if (this.token) init = {
+            ...init,
+            headers: {
+                ...init.headers,
+                "Authorization": `Bearer ${this.token}`
+            }
+        };
+        return window.fetch(url, init);
     }
 }
 
@@ -360,10 +370,8 @@ class $111fe12c7702cc1b$export$88f615852494efb2 extends (0, $da113e3412d10fe0$ex
 
 class $01683bbd8995abc5$export$e3378d92d7ea84e extends (0, $ec0f87cb64500431$export$8f6e4be34af2779b) {
     jsonParseReviver = undefined;
-    constructor(configuration, baseUrl, http){
-        super(configuration);
-        this.http = http ? http : window;
-        this.baseUrl = this.getBaseUrl("", baseUrl);
+    constructor(baseUrl, token){
+        super(baseUrl, token);
     }
     /**
      * Gets authenticates the user and returns a token for further access - the token has a default expiration of 1800 seconds/30 minutes
@@ -386,7 +394,7 @@ class $01683bbd8995abc5$export$e3378d92d7ea84e extends (0, $ec0f87cb64500431$exp
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processAuthenticate(_response);
         });
     }
@@ -426,7 +434,7 @@ class $01683bbd8995abc5$export$e3378d92d7ea84e extends (0, $ec0f87cb64500431$exp
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processRefresh(_response);
         });
     }
@@ -464,7 +472,7 @@ class $01683bbd8995abc5$export$e3378d92d7ea84e extends (0, $ec0f87cb64500431$exp
             method: "PATCH",
             headers: {}
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processResetpassword(_response);
         });
     }
@@ -498,7 +506,7 @@ class $01683bbd8995abc5$export$e3378d92d7ea84e extends (0, $ec0f87cb64500431$exp
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetAddresses(_response);
         });
     }
@@ -532,7 +540,7 @@ class $01683bbd8995abc5$export$e3378d92d7ea84e extends (0, $ec0f87cb64500431$exp
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetUserInfo(_response);
         });
     }
@@ -570,7 +578,7 @@ class $01683bbd8995abc5$export$e3378d92d7ea84e extends (0, $ec0f87cb64500431$exp
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processPatch(_response);
         });
     }
@@ -611,7 +619,7 @@ class $01683bbd8995abc5$export$e3378d92d7ea84e extends (0, $ec0f87cb64500431$exp
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processPut(_response);
         });
     }
@@ -649,7 +657,7 @@ class $01683bbd8995abc5$export$e3378d92d7ea84e extends (0, $ec0f87cb64500431$exp
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processCreate(_response);
         });
     }
@@ -687,7 +695,7 @@ class $01683bbd8995abc5$export$e3378d92d7ea84e extends (0, $ec0f87cb64500431$exp
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processCreateRecipients(_response);
         });
     }
@@ -923,10 +931,8 @@ class $a69addafe5c8db74$export$5d48c2587cd93482 extends (0, $da113e3412d10fe0$ex
 
 class $65782a69baa2c12f$export$df76c3bacd435747 extends (0, $ec0f87cb64500431$export$8f6e4be34af2779b) {
     jsonParseReviver = undefined;
-    constructor(configuration, baseUrl, http){
-        super(configuration);
-        this.http = http ? http : window;
-        this.baseUrl = this.getBaseUrl("", baseUrl);
+    constructor(baseUrl, token){
+        super(baseUrl, token);
     }
     /**
      * Gets all areas
@@ -940,7 +946,7 @@ class $65782a69baa2c12f$export$df76c3bacd435747 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetAll(_response);
         });
     }
@@ -977,7 +983,7 @@ class $65782a69baa2c12f$export$df76c3bacd435747 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetById(_response);
         });
     }
@@ -1017,7 +1023,7 @@ class $65782a69baa2c12f$export$df76c3bacd435747 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetByDomain(_response);
         });
     }
@@ -1218,10 +1224,8 @@ class $1a430d75587022ee$export$f63e98f49938fb87 extends (0, $da113e3412d10fe0$ex
 
 class $0b8922466999951b$export$5cfee608d429befb extends (0, $ec0f87cb64500431$export$8f6e4be34af2779b) {
     jsonParseReviver = undefined;
-    constructor(configuration, baseUrl, http){
-        super(configuration);
-        this.http = http ? http : window;
-        this.baseUrl = this.getBaseUrl("", baseUrl);
+    constructor(baseUrl, token){
+        super(baseUrl, token);
     }
     /**
      * Gets page grid rows
@@ -1240,7 +1244,7 @@ class $0b8922466999951b$export$5cfee608d429befb extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetById(_response);
         });
     }
@@ -1285,7 +1289,7 @@ class $0b8922466999951b$export$5cfee608d429befb extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetByUrl(_response);
         });
     }
@@ -1414,10 +1418,8 @@ class $53b8b93422e4d3b9$export$d7f927033ffdf23f extends (0, $da113e3412d10fe0$ex
 
 class $2a1a6d49ddc31407$export$4b77aa913f68641f extends (0, $ec0f87cb64500431$export$8f6e4be34af2779b) {
     jsonParseReviver = undefined;
-    constructor(configuration, baseUrl, http){
-        super(configuration);
-        this.http = http ? http : window;
-        this.baseUrl = this.getBaseUrl("", baseUrl);
+    constructor(baseUrl, token){
+        super(baseUrl, token);
     }
     /**
      * Gets a navigation for a given area.
@@ -1459,7 +1461,7 @@ class $2a1a6d49ddc31407$export$4b77aa913f68641f extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetById(_response);
         });
     }
@@ -1607,10 +1609,8 @@ class $ac6718b9be52d116$export$4ce9f6c7bfdcec1b extends (0, $da113e3412d10fe0$ex
 
 class $fb48a0a37d7d0276$export$427a4a73e42a637a extends (0, $ec0f87cb64500431$export$8f6e4be34af2779b) {
     jsonParseReviver = undefined;
-    constructor(configuration, baseUrl, http){
-        super(configuration);
-        this.http = http ? http : window;
-        this.baseUrl = this.getBaseUrl("", baseUrl);
+    constructor(baseUrl, token){
+        super(baseUrl, token);
     }
     /**
      * Gets pages by query
@@ -1630,7 +1630,7 @@ class $fb48a0a37d7d0276$export$427a4a73e42a637a extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetAll(_response);
         });
     }
@@ -1670,7 +1670,7 @@ class $fb48a0a37d7d0276$export$427a4a73e42a637a extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetById(_response);
         });
     }
@@ -1712,7 +1712,7 @@ class $fb48a0a37d7d0276$export$427a4a73e42a637a extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetByUrl(_response);
         });
     }
@@ -2160,10 +2160,8 @@ class $ac715dc3c47cc4d4$export$e288868a4b2c3c3 extends (0, $da113e3412d10fe0$exp
 
 class $640f8b4c719afd5b$export$8625a278c3202ff9 extends (0, $ec0f87cb64500431$export$8f6e4be34af2779b) {
     jsonParseReviver = undefined;
-    constructor(configuration, baseUrl, http){
-        super(configuration);
-        this.http = http ? http : window;
-        this.baseUrl = this.getBaseUrl("", baseUrl);
+    constructor(baseUrl, token){
+        super(baseUrl, token);
     }
     /**
      * Get a full pageview with content and items for the specified page id
@@ -2180,7 +2178,7 @@ class $640f8b4c719afd5b$export$8625a278c3202ff9 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetById(_response);
         });
     }
@@ -2222,7 +2220,7 @@ class $640f8b4c719afd5b$export$8625a278c3202ff9 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetByUrl(_response);
         });
     }
@@ -2255,10 +2253,8 @@ class $640f8b4c719afd5b$export$8625a278c3202ff9 extends (0, $ec0f87cb64500431$ex
 
 class $7692e55b428d17c4$export$5b316b7b8ac649a8 extends (0, $ec0f87cb64500431$export$8f6e4be34af2779b) {
     jsonParseReviver = undefined;
-    constructor(configuration, baseUrl, http){
-        super(configuration);
-        this.http = http ? http : window;
-        this.baseUrl = this.getBaseUrl("", baseUrl);
+    constructor(baseUrl, token){
+        super(baseUrl, token);
     }
     /**
      * Gets paragraphs by query
@@ -2278,7 +2274,7 @@ class $7692e55b428d17c4$export$5b316b7b8ac649a8 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetAll(_response);
         });
     }
@@ -2321,7 +2317,7 @@ class $7692e55b428d17c4$export$5b316b7b8ac649a8 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetById(_response);
         });
     }
@@ -2363,7 +2359,7 @@ class $7692e55b428d17c4$export$5b316b7b8ac649a8 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetByUrl(_response);
         });
     }
@@ -2543,10 +2539,8 @@ class $1f53c375e50b96f3$export$b63289fbda65eed1 {
 
 class $ee34bd2ff5f945ee$export$9e45ef366e845f2f extends (0, $ec0f87cb64500431$export$8f6e4be34af2779b) {
     jsonParseReviver = undefined;
-    constructor(configuration, baseUrl, http){
-        super(configuration);
-        this.http = http ? http : window;
-        this.baseUrl = this.getBaseUrl("", baseUrl);
+    constructor(baseUrl, token){
+        super(baseUrl, token);
     }
     /**
      * Gets all translations for a design
@@ -2562,7 +2556,7 @@ class $ee34bd2ff5f945ee$export$9e45ef366e845f2f extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetAll(_response);
         });
     }
@@ -2598,7 +2592,7 @@ class $ee34bd2ff5f945ee$export$9e45ef366e845f2f extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetAll2(_response);
         });
     }
@@ -2636,7 +2630,7 @@ class $ee34bd2ff5f945ee$export$9e45ef366e845f2f extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetAllAll(_response);
         });
     }
@@ -3240,10 +3234,8 @@ class $6ca33ce44c416691$export$851d109e5e4aef3d {
 
 class $0eddb1afa16352c4$export$33ee60cc95d2cb98 extends (0, $ec0f87cb64500431$export$8f6e4be34af2779b) {
     jsonParseReviver = undefined;
-    constructor(configuration, baseUrl, http){
-        super(configuration);
-        this.http = http ? http : window;
-        this.baseUrl = this.getBaseUrl("", baseUrl);
+    constructor(baseUrl, token){
+        super(baseUrl, token);
     }
     /**
      * Create cart
@@ -3455,7 +3447,7 @@ class $0eddb1afa16352c4$export$33ee60cc95d2cb98 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processCreateCart(_response);
         });
     }
@@ -3498,7 +3490,7 @@ class $0eddb1afa16352c4$export$33ee60cc95d2cb98 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetCarts(_response);
         });
     }
@@ -3538,7 +3530,7 @@ class $0eddb1afa16352c4$export$33ee60cc95d2cb98 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetCart(_response);
         });
     }
@@ -3582,7 +3574,7 @@ class $0eddb1afa16352c4$export$33ee60cc95d2cb98 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processUpdateCart(_response);
         });
     }
@@ -3620,7 +3612,7 @@ class $0eddb1afa16352c4$export$33ee60cc95d2cb98 extends (0, $ec0f87cb64500431$ex
             method: "DELETE",
             headers: {}
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processDeleteCart(_response);
         });
     }
@@ -3660,7 +3652,7 @@ class $0eddb1afa16352c4$export$33ee60cc95d2cb98 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processUpdateShipping(_response);
         });
     }
@@ -3703,7 +3695,7 @@ class $0eddb1afa16352c4$export$33ee60cc95d2cb98 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processUpdatePayment(_response);
         });
     }
@@ -3746,7 +3738,7 @@ class $0eddb1afa16352c4$export$33ee60cc95d2cb98 extends (0, $ec0f87cb64500431$ex
                 "Content-Type": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processAddLineToCart(_response);
         });
     }
@@ -3781,7 +3773,7 @@ class $0eddb1afa16352c4$export$33ee60cc95d2cb98 extends (0, $ec0f87cb64500431$ex
             method: "DELETE",
             headers: {}
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processEmptyCart(_response);
         });
     }
@@ -3819,7 +3811,7 @@ class $0eddb1afa16352c4$export$33ee60cc95d2cb98 extends (0, $ec0f87cb64500431$ex
             method: "DELETE",
             headers: {}
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processRemoveLineFromCart(_response);
         });
     }
@@ -3862,7 +3854,7 @@ class $0eddb1afa16352c4$export$33ee60cc95d2cb98 extends (0, $ec0f87cb64500431$ex
                 "Content-Type": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processUpdateCartLine(_response);
         });
     }
@@ -3900,7 +3892,7 @@ class $0eddb1afa16352c4$export$33ee60cc95d2cb98 extends (0, $ec0f87cb64500431$ex
                 "Content-Type": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processCreateOrder(_response);
         });
     }
@@ -3929,10 +3921,8 @@ class $0eddb1afa16352c4$export$33ee60cc95d2cb98 extends (0, $ec0f87cb64500431$ex
 
 class $b53827fce66ab065$export$a7828f465fa73b14 extends (0, $ec0f87cb64500431$export$8f6e4be34af2779b) {
     jsonParseReviver = undefined;
-    constructor(configuration, baseUrl, http){
-        super(configuration);
-        this.http = http ? http : window;
-        this.baseUrl = this.getBaseUrl("", baseUrl);
+    constructor(baseUrl, token){
+        super(baseUrl, token);
     }
     verifyConnection() {
         let url_ = this.baseUrl + "/dwapi/feeds/VerifyConnection";
@@ -3943,7 +3933,7 @@ class $b53827fce66ab065$export$a7828f465fa73b14 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processVerifyConnection(_response);
         });
     }
@@ -3979,7 +3969,7 @@ class $b53827fce66ab065$export$a7828f465fa73b14 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/octet-stream"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetFeedOutput(_response);
         });
     }
@@ -4011,10 +4001,8 @@ class $b53827fce66ab065$export$a7828f465fa73b14 extends (0, $ec0f87cb64500431$ex
 
 class $fa77f7abbf780bca$export$f40d29ef16d78592 extends (0, $ec0f87cb64500431$export$8f6e4be34af2779b) {
     jsonParseReviver = undefined;
-    constructor(configuration, baseUrl, http){
-        super(configuration);
-        this.http = http ? http : window;
-        this.baseUrl = this.getBaseUrl("", baseUrl);
+    constructor(baseUrl, token){
+        super(baseUrl, token);
     }
     /**
      * Gets all groups for a shop or a parent group
@@ -4051,7 +4039,7 @@ class $fa77f7abbf780bca$export$f40d29ef16d78592 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/octet-stream"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetAll(_response);
         });
     }
@@ -4114,7 +4102,7 @@ class $fa77f7abbf780bca$export$f40d29ef16d78592 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/octet-stream"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetGroup(_response);
         });
     }
@@ -4216,10 +4204,8 @@ class $fe21c46cdec9ffba$export$3f4b75158903cae7 extends (0, $da113e3412d10fe0$ex
 
 class $e9bee94b97fd0115$export$ee2fa6182b3b0170 extends (0, $ec0f87cb64500431$export$8f6e4be34af2779b) {
     jsonParseReviver = undefined;
-    constructor(configuration, baseUrl, http){
-        super(configuration);
-        this.http = http ? http : window;
-        this.baseUrl = this.getBaseUrl("", baseUrl);
+    constructor(baseUrl, token){
+        super(baseUrl, token);
     }
     /**
      * Get countries
@@ -4235,7 +4221,7 @@ class $e9bee94b97fd0115$export$ee2fa6182b3b0170 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetCountries(_response);
         });
     }
@@ -4274,7 +4260,7 @@ class $e9bee94b97fd0115$export$ee2fa6182b3b0170 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetCurrencies(_response);
         });
     }
@@ -4307,10 +4293,8 @@ class $e9bee94b97fd0115$export$ee2fa6182b3b0170 extends (0, $ec0f87cb64500431$ex
 
 class $cdf4f290b8cf9e7c$export$33d379092842afb2 extends (0, $ec0f87cb64500431$export$8f6e4be34af2779b) {
     jsonParseReviver = undefined;
-    constructor(configuration, baseUrl, http){
-        super(configuration);
-        this.http = http ? http : window;
-        this.baseUrl = this.getBaseUrl("", baseUrl);
+    constructor(baseUrl, token){
+        super(baseUrl, token);
     }
     /**
      * Get current customer orders
@@ -4343,7 +4327,7 @@ class $cdf4f290b8cf9e7c$export$33d379092842afb2 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetOrders(_response);
         });
     }
@@ -4404,7 +4388,7 @@ class $cdf4f290b8cf9e7c$export$33d379092842afb2 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetOrder(_response);
         });
     }
@@ -4434,10 +4418,8 @@ class $cdf4f290b8cf9e7c$export$33d379092842afb2 extends (0, $ec0f87cb64500431$ex
 
 class $449d347329659c9d$export$914c60b88733f0a0 extends (0, $ec0f87cb64500431$export$8f6e4be34af2779b) {
     jsonParseReviver = undefined;
-    constructor(configuration, baseUrl, http){
-        super(configuration);
-        this.http = http ? http : window;
-        this.baseUrl = this.getBaseUrl("", baseUrl);
+    constructor(baseUrl, token){
+        super(baseUrl, token);
     }
     /**
      * Get payments
@@ -4457,7 +4439,7 @@ class $449d347329659c9d$export$914c60b88733f0a0 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetPayments(_response);
         });
     }
@@ -5410,10 +5392,8 @@ class $f0e4d5a7d301f023$export$c23b750e5a0f6dff extends (0, $da113e3412d10fe0$ex
 
 class $c21a0ae564900c1e$export$c7599661db785dae extends (0, $ec0f87cb64500431$export$8f6e4be34af2779b) {
     jsonParseReviver = undefined;
-    constructor(configuration, baseUrl, http){
-        super(configuration);
-        this.http = http ? http : window;
-        this.baseUrl = this.getBaseUrl("", baseUrl);
+    constructor(baseUrl, token){
+        super(baseUrl, token);
     }
     /**
      * Gets products filtered by query parameters
@@ -5445,7 +5425,7 @@ class $c21a0ae564900c1e$export$c7599661db785dae extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetAll(_response);
         });
     }
@@ -5533,7 +5513,7 @@ class $c21a0ae564900c1e$export$c7599661db785dae extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processSearch(_response);
         });
     }
@@ -5617,7 +5597,7 @@ class $c21a0ae564900c1e$export$c7599661db785dae extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetProduct(_response);
         });
     }
@@ -5698,7 +5678,7 @@ class $c21a0ae564900c1e$export$c7599661db785dae extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetProduct2(_response);
         });
     }
@@ -5769,7 +5749,7 @@ class $c21a0ae564900c1e$export$c7599661db785dae extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processRelated(_response);
         });
     }
@@ -5843,7 +5823,7 @@ class $c21a0ae564900c1e$export$c7599661db785dae extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processRelated2(_response);
         });
     }
@@ -5958,7 +5938,7 @@ class $c21a0ae564900c1e$export$c7599661db785dae extends (0, $ec0f87cb64500431$ex
             method: "GET",
             headers: {}
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processExportProducts(_response);
         });
     }
@@ -5994,10 +5974,8 @@ class $c21a0ae564900c1e$export$c7599661db785dae extends (0, $ec0f87cb64500431$ex
 
 class $e047f322d2b943a4$export$22ecf64bbb48d645 extends (0, $ec0f87cb64500431$export$8f6e4be34af2779b) {
     jsonParseReviver = undefined;
-    constructor(configuration, baseUrl, http){
-        super(configuration);
-        this.http = http ? http : window;
-        this.baseUrl = this.getBaseUrl("", baseUrl);
+    constructor(baseUrl, token){
+        super(baseUrl, token);
     }
     /**
      * Find service points for speccified shipping by address or zip code
@@ -6026,7 +6004,7 @@ class $e047f322d2b943a4$export$22ecf64bbb48d645 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/octet-stream"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processFindServicePoints(_response);
         });
     }
@@ -6069,7 +6047,7 @@ class $e047f322d2b943a4$export$22ecf64bbb48d645 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetShippings(_response);
         });
     }
@@ -6102,10 +6080,8 @@ class $e047f322d2b943a4$export$22ecf64bbb48d645 extends (0, $ec0f87cb64500431$ex
 
 class $d5502a069d5e178f$export$ff39e19587dd8c73 extends (0, $ec0f87cb64500431$export$8f6e4be34af2779b) {
     jsonParseReviver = undefined;
-    constructor(configuration, baseUrl, http){
-        super(configuration);
-        this.http = http ? http : window;
-        this.baseUrl = this.getBaseUrl("", baseUrl);
+    constructor(baseUrl, token){
+        super(baseUrl, token);
     }
     /**
      * Returns variant information for the specified product
@@ -6163,7 +6139,7 @@ class $d5502a069d5e178f$export$ff39e19587dd8c73 extends (0, $ec0f87cb64500431$ex
                 "Accept": "application/json"
             }
         };
-        return this.http.fetch(url_, options_).then((_response)=>{
+        return this.fetch(url_, options_).then((_response)=>{
             return this.processGetVariantInfo(_response);
         });
     }

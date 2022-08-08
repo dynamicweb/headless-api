@@ -1,6 +1,6 @@
 {
   "name": "@dynamicweb/headless-api",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Dynamicweb Headless API is collection javascript methods and models to interact with the Web API of Dynamicweb.",
   "config": {
     "version_short": "0.0"

@@ -1,8 +1,7 @@
-declare class ClientConfiguration {
-}
 declare class ClientBase {
-    constructor(configuration: ClientConfiguration);
-    getBaseUrl(input: string, baseUrl?: string): string;
+    protected baseUrl: string | undefined;
+    constructor(baseUrl?: string, token?: string);
+    protected fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
 }
 declare class AuthenticationTokenResponse {
     token?: string | undefined;
@@ -134,9 +133,7 @@ declare class UserViewModel extends ViewModelBase {
 }
 declare class UsersClient extends ClientBase {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(configuration: ClientConfiguration, baseUrl?: string, http?: {
-        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-    });
+    constructor(baseUrl?: string, token?: string);
     authenticate(userName: string | null, password: string | null, shopid: string | null | undefined, expirationInSeconds: number | undefined): Promise<AuthenticationTokenResponse>;
     protected processAuthenticate(response: Response): Promise<AuthenticationTokenResponse>;
     refresh(expirationInSeconds: number | undefined): Promise<AuthenticationTokenResponse>;
@@ -223,9 +220,7 @@ declare class AreaInfoViewModel extends ViewModelBase {
 }
 declare class AreasClient extends ClientBase {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(configuration: ClientConfiguration, baseUrl?: string, http?: {
-        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-    });
+    constructor(baseUrl?: string, token?: string);
     getAll(): Promise<AreaInfoViewModel[]>;
     protected processGetAll(response: Response): Promise<AreaInfoViewModel[]>;
     getById(id: number): Promise<AreaInfoViewModel>;
@@ -298,9 +293,7 @@ declare class GridRowViewModel extends ViewModelBase {
 }
 declare class GridRowClient extends ClientBase {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(configuration: ClientConfiguration, baseUrl?: string, http?: {
-        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-    });
+    constructor(baseUrl?: string, token?: string);
     getById(pageId: number, device: DeviceType | null | undefined): Promise<GridRowViewModel[]>;
     protected processGetById(response: Response): Promise<GridRowViewModel[]>;
     getByUrl(url: string | null, hostname: string | null | undefined): Promise<GridRowViewModel[]>;
@@ -336,9 +329,7 @@ declare class NavigationTreeViewModel extends ViewModelBase {
 }
 declare class NavigationsClient extends ClientBase {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(configuration: ClientConfiguration, baseUrl?: string, http?: {
-        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-    });
+    constructor(baseUrl?: string, token?: string);
     getById(areaId: number, pageId: number | undefined, expandMode: ExpandMode | undefined, startLevel: number | undefined, stopLevel: number | undefined, includeFoldersAndHidden: boolean | undefined, rootAreaId: number | undefined, rootPageId: number | undefined, rootNavigationTag: string | null | undefined, parameters: {
         [key: string]: any;
     } | null | undefined): Promise<NavigationTreeViewModel>;
@@ -387,9 +378,7 @@ declare class PageInfoViewModel extends ViewModelBase {
 }
 declare class PagesClient extends ClientBase {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(configuration: ClientConfiguration, baseUrl?: string, http?: {
-        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-    });
+    constructor(baseUrl?: string, token?: string);
     getAll(areaId: number | null | undefined, pageId: number | null | undefined, itemType: string | null | undefined): Promise<PageInfoViewModel[]>;
     protected processGetAll(response: Response): Promise<PageInfoViewModel[]>;
     getById(id: number): Promise<PageInfoViewModel>;
@@ -550,9 +539,7 @@ declare class PageViewModel extends ViewModelBase {
 }
 declare class PageViewsClient extends ClientBase {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(configuration: ClientConfiguration, baseUrl?: string, http?: {
-        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-    });
+    constructor(baseUrl?: string, token?: string);
     getById(id: number): Promise<PageViewModel>;
     protected processGetById(response: Response): Promise<PageViewModel>;
     getByUrl(url: string | null, hostname: string | null | undefined): Promise<PageViewModel>;
@@ -560,9 +547,7 @@ declare class PageViewsClient extends ClientBase {
 }
 declare class ParagraphsClient extends ClientBase {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(configuration: ClientConfiguration, baseUrl?: string, http?: {
-        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-    });
+    constructor(baseUrl?: string, token?: string);
     getAll(areaId: number | null | undefined, pageId: number | null | undefined, itemType: string | null | undefined): Promise<ParagraphInfoViewModel[]>;
     protected processGetAll(response: Response): Promise<ParagraphInfoViewModel[]>;
     getById(id: number): Promise<ParagraphInfoViewModel>;
@@ -614,9 +599,7 @@ declare class Translation {
 }
 declare class TranslationsClient extends ClientBase {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(configuration: ClientConfiguration, baseUrl?: string, http?: {
-        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-    });
+    constructor(baseUrl?: string, token?: string);
     getAll(areaid: number): Promise<{
         [key: string]: Key;
     }>;
@@ -861,9 +844,7 @@ declare class UserCartsResponse {
 }
 declare class CartsClient extends ClientBase {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(configuration: ClientConfiguration, baseUrl?: string, http?: {
-        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-    });
+    constructor(baseUrl?: string, token?: string);
     createCart(currencyCode: string | null, countryCode: string | null, languageId: string | null, id: string | null | undefined, parentOrderId: string | null | undefined, secondaryUserId: number | undefined, secondaryUserName: string | null | undefined, secret: string | null | undefined, shopId: string | null | undefined, displayName: string | null | undefined, voucherCode: string | null | undefined, weight: number | undefined, volume: number | undefined, createdAt: Date | undefined, modified: Date | undefined, completedDate: Date | null | undefined, completed: boolean | null | undefined, ledgerType: string | null | undefined, stateId: string | null | undefined, stateName: string | null | undefined, stateDescription: string | null | undefined, integrationOrderId: string | null | undefined, recurringOrderId: number | null | undefined, customerUserId: number | undefined, customerNumber: string | null | undefined, customerEan: string | null | undefined, customerRefId: string | null | undefined, customerCompany: string | null | undefined, customerTitle: string | null | undefined, customerName: string | null | undefined, customerFirstName: string | null | undefined, customerSurname: string | null | undefined, customerMiddleName: string | null | undefined, customerHouseNumber: string | null | undefined, customerInitials: string | null | undefined, customerPrefix: string | null | undefined, customerAddress: string | null | undefined, customerAddress2: string | null | undefined, customerAddressId: number | undefined, customerZip: string | null | undefined, customerCity: string | null | undefined, customerCountry: string | null | undefined, customerCountryCode: string | null | undefined, customerRegion: string | null | undefined, customerPhone: string | null | undefined, customerEmail: string | null | undefined, customerCell: string | null | undefined, customerAccepted: boolean | null | undefined, customerComment: string | null | undefined, deliveryCompany: string | null | undefined, deliveryName: string | null | undefined, deliveryFirstName: string | null | undefined, deliverySurname: string | null | undefined, deliveryMiddleName: string | null | undefined, deliveryTitle: string | null | undefined, deliveryHouseNumber: string | null | undefined, deliveryInitials: string | null | undefined, deliveryPrefix: string | null | undefined, deliveryAddress: string | null | undefined, deliveryAddress2: string | null | undefined, deliveryAddressId: number | undefined, deliveryZip: string | null | undefined, deliveryCity: string | null | undefined, deliveryCountry: string | null | undefined, deliveryCountryCode: string | null | undefined, deliveryRegion: string | null | undefined, deliveryPhone: string | null | undefined, deliveryEmail: string | null | undefined, deliveryCell: string | null | undefined, reference: string | null | undefined, newsletterSubscribe: boolean | undefined, transactionCardnumber: string | null | undefined, transactionCardType: string | null | undefined, transactionNumber: string | null | undefined, transactionStatus: string | null | undefined, shippingDate: Date | null | undefined, trackAndTraceName: string | null | undefined, trackAndTraceURL: string | null | undefined, trackAndTraceNumber: string | null | undefined, orderLines: OrderLineViewModel[] | null | undefined, orderFields: {
         [key: string]: FieldValueViewModel;
     } | null | undefined, totalDiscount: PriceViewModel | null | undefined, totalProductDiscount: PriceViewModel | null | undefined, totalOrderDiscount: PriceViewModel | null | undefined, price: PriceViewModel | null | undefined, priceBeforeFees: PriceViewModel | null | undefined, totalPriceBeforeFeesAndTaxes: PriceViewModel | null | undefined, totalTaxes: PriceViewModel | null | undefined, shippingFee: PriceViewModel | null | undefined, shippingMethod: ShippingViewModel | null | undefined, paymentMethod: PaymentViewModel | null | undefined, paymentFee: PriceViewModel | null | undefined): Promise<OrderViewModel>;
@@ -901,9 +882,7 @@ interface FileResponse {
 }
 declare class FeedClient extends ClientBase {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(configuration: ClientConfiguration, baseUrl?: string, http?: {
-        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-    });
+    constructor(baseUrl?: string, token?: string);
     verifyConnection(): Promise<boolean>;
     protected processVerifyConnection(response: Response): Promise<boolean>;
     getFeedOutput(id: number, languageId: string | null | undefined, currencyId: string | null | undefined, shopId: string | null | undefined, userId: string | null | undefined, loadVariantInfoOnVariants: boolean | undefined): Promise<FileResponse>;
@@ -929,9 +908,7 @@ declare class FieldValueViewModelSetting extends ViewSettingsBase<FieldValueView
 }
 declare class GroupsClient extends ClientBase {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(configuration: ClientConfiguration, baseUrl?: string, http?: {
-        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-    });
+    constructor(baseUrl?: string, token?: string);
     getAll(parentId: string | null | undefined, shopId: string | null | undefined, mediaSettings: MediaViewModelSettings | null | undefined, fieldSettings: FieldValueViewModelSetting | null | undefined, userId: number | undefined, showPricesWithVat: boolean | undefined, currencyCode: string | null | undefined, countryCode: string | null | undefined, languageId: string | null | undefined, filledProperties: string[] | null | undefined): Promise<FileResponse>;
     protected processGetAll(response: Response): Promise<FileResponse>;
     getGroup(groupId: string | null, parentId: string | null | undefined, shopId: string | null | undefined, mediaSettings: MediaViewModelSettings | null | undefined, fieldSettings: FieldValueViewModelSetting | null | undefined, userId: number | undefined, showPricesWithVat: boolean | undefined, currencyCode: string | null | undefined, countryCode: string | null | undefined, languageId: string | null | undefined, filledProperties: string[] | null | undefined): Promise<FileResponse>;
@@ -962,9 +939,7 @@ declare class CurrencyViewModel extends ViewModelBase {
 }
 declare class InternationalClient extends ClientBase {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(configuration: ClientConfiguration, baseUrl?: string, http?: {
-        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-    });
+    constructor(baseUrl?: string, token?: string);
     getCountries(languageId: string | null | undefined): Promise<CountryViewModel[]>;
     protected processGetCountries(response: Response): Promise<CountryViewModel[]>;
     getCurrencies(languageId: string | null | undefined): Promise<CurrencyViewModel[]>;
@@ -1009,9 +984,7 @@ declare class OrderLineViewModelSettings extends ViewSettingsBaseCurrencyBase<Or
 }
 declare class OrderClient extends ClientBase {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(configuration: ClientConfiguration, baseUrl?: string, http?: {
-        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-    });
+    constructor(baseUrl?: string, token?: string);
     getOrders(pageSize: number | undefined, pageCount: number | undefined, currentPage: number | undefined, totalOrdersCount: number | undefined, showPricesWithVat: boolean | undefined, filledProperties: string[] | null | undefined): Promise<OrderViewModel>;
     protected processGetOrders(response: Response): Promise<OrderViewModel>;
     getOrder(secret: string | null, priceSettings: PriceViewModelSettings | null | undefined, orderFieldSettings: FieldValueViewModelSetting | null | undefined, orderLineSettings: OrderLineViewModelSettings | null | undefined, userId: number | undefined, showPricesWithVat: boolean | undefined, currencyCode: string | null | undefined, countryCode: string | null | undefined, shopId: string | null | undefined, languageId: string | null | undefined, filledProperties: string[] | null | undefined): Promise<OrderViewModel>;
@@ -1019,9 +992,7 @@ declare class OrderClient extends ClientBase {
 }
 declare class PaymentsClient extends ClientBase {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(configuration: ClientConfiguration, baseUrl?: string, http?: {
-        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-    });
+    constructor(baseUrl?: string, token?: string);
     getPayments(languageId: string | null | undefined, countryCode: string | null | undefined, regionCode: string | null | undefined): Promise<PaymentViewModel[]>;
     protected processGetPayments(response: Response): Promise<PaymentViewModel[]>;
 }
@@ -1418,9 +1389,7 @@ declare class ProductListViewModelSettings extends ViewSettingsBaseCurrencyBase<
 }
 declare class ProductsClient extends ClientBase {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(configuration: ClientConfiguration, baseUrl?: string, http?: {
-        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-    });
+    constructor(baseUrl?: string, token?: string);
     getAll(repositoryName: string | null | undefined, queryName: string | null | undefined, groupId: string | null | undefined, productIds: string[] | null | undefined, sortBy: string | null | undefined, sortOrder: string | null | undefined, request: ProductListViewModelSettings | null): Promise<ProductListViewModel>;
     protected processGetAll(response: Response): Promise<ProductListViewModel>;
     search(repositoryName: string | null | undefined, queryName: string | null | undefined, groupId: string | null | undefined, productIds: string[] | null | undefined, sortBy: string | null | undefined, sortOrder: string | null | undefined, productSettings: ProductViewModelSettings | null | undefined, groupSettings: ProductGroupViewModelSettings | null | undefined, facetGroupSettings: FacetGroupViewModelSettings | null | undefined, parameters: {
@@ -1446,9 +1415,7 @@ declare class ProductsClient extends ClientBase {
 }
 declare class ShippingClient extends ClientBase {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(configuration: ClientConfiguration, baseUrl?: string, http?: {
-        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-    });
+    constructor(baseUrl?: string, token?: string);
     findServicePoints(shippingId: string | null, languageId: string | null, countryCode: string | null | undefined, zipCode: string | null | undefined, address: string | null | undefined, numberOfServicePoints: number | undefined): Promise<FileResponse>;
     protected processFindServicePoints(response: Response): Promise<FileResponse>;
     getShippings(languageId: string | null | undefined, countryCode: string | null | undefined, regionCode: string | null | undefined): Promise<ShippingViewModel[]>;
@@ -1456,9 +1423,7 @@ declare class ShippingClient extends ClientBase {
 }
 declare class VariantsClient extends ClientBase {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(configuration: ClientConfiguration, baseUrl?: string, http?: {
-        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-    });
+    constructor(baseUrl?: string, token?: string);
     getVariantInfo(productId: string | null, loadVariantInfoOnVariants: boolean | undefined, priceSettings: PriceViewModelSettings | null | undefined, mediaSettings: MediaViewModelSettings | null | undefined, manufacturerSettings: ManufacturerViewModelSettings | null | undefined, categoryFieldSettings: CategoryFieldViewModelSetting | null | undefined, productFieldSettings: FieldValueViewModelSetting | null | undefined, variantInfoSettings: VariantInfoViewModelSettings | null | undefined, groupInfoSettings: GroupInfoViewModelSettings | null | undefined, assetCategorySettings: AssetCategoryViewModelSettings | null | undefined, stockUnitSettings: StockUnitViewModelSettings | null | undefined, unitOptionSettings: UnitOptionViewModelSettings | null | undefined, userId: number | undefined, showPricesWithVat: boolean | undefined, currencyCode: string | null | undefined, countryCode: string | null | undefined, shopId: string | null | undefined, languageId: string | null | undefined, filledProperties: string[] | null | undefined): Promise<VariantInfoViewModel>;
     protected processGetVariantInfo(response: Response): Promise<VariantInfoViewModel>;
 }

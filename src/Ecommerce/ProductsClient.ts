@@ -1,10 +1,8 @@
 import { ClientBase } from '../Shared/ClientBase';
-import { ClientConfiguration } from '../Shared/ClientConfiguration';
 import { throwException } from '../Helpers/ExceptionHelper';
 import { ExportFormat } from '../Shared/ExportFormat';
 import { ProductViewModel } from './ProductViewModel';
 import { ProductListViewModel } from './ProductListViewModel';
-
 import { PriceViewModelSettings } from './PriceViewModelSettings';
 import { MediaViewModelSettings } from './MediaViewModelSettings';
 import { ManufacturerViewModelSettings } from './ManufacturerViewModelSettings';
@@ -21,14 +19,10 @@ import { ProductGroupViewModelSettings } from './ProductGroupViewModelSettings';
 import { FacetGroupViewModelSettings } from '../Shared/FacetGroupViewModelSettings';
 
 export class ProductsClient extends ClientBase {
-    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
-    private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
-    constructor(configuration: ClientConfiguration, baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        super(configuration);
-        this.http = http ? http : window as any;
-        this.baseUrl = this.getBaseUrl("", baseUrl);
+    constructor(baseUrl?: string, token?: string) {
+        super(baseUrl, token);
     }
 
     /**
@@ -69,7 +63,7 @@ export class ProductsClient extends ClientBase {
             }
         };
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
+        return this.fetch(url_, options_).then((_response: Response) => {
             return this.processGetAll(_response);
         });
     }
@@ -187,7 +181,7 @@ export class ProductsClient extends ClientBase {
             }
         };
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
+        return this.fetch(url_, options_).then((_response: Response) => {
             return this.processSearch(_response);
         });
     }
@@ -301,7 +295,7 @@ export class ProductsClient extends ClientBase {
             }
         };
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
+        return this.fetch(url_, options_).then((_response: Response) => {
             return this.processGetProduct(_response);
         });
     }
@@ -411,7 +405,7 @@ export class ProductsClient extends ClientBase {
             }
         };
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
+        return this.fetch(url_, options_).then((_response: Response) => {
             return this.processGetProduct2(_response);
         });
     }
@@ -507,7 +501,7 @@ export class ProductsClient extends ClientBase {
             }
         };
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
+        return this.fetch(url_, options_).then((_response: Response) => {
             return this.processRelated(_response);
         });
     }
@@ -607,7 +601,7 @@ export class ProductsClient extends ClientBase {
             }
         };
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
+        return this.fetch(url_, options_).then((_response: Response) => {
             return this.processRelated2(_response);
         });
     }
@@ -765,7 +759,7 @@ export class ProductsClient extends ClientBase {
             }
         };
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
+        return this.fetch(url_, options_).then((_response: Response) => {
             return this.processExportProducts(_response);
         });
     }

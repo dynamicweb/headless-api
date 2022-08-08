@@ -1,17 +1,12 @@
 import { ClientBase } from '../Shared/ClientBase';
-import { ClientConfiguration } from '../Shared/ClientConfiguration';
 import { throwException } from '../Helpers/ExceptionHelper';
 import { PageInfoViewModel } from './PageInfoViewModel';
 
 export class PagesClient extends ClientBase {
-    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
-    private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
-    constructor(configuration: ClientConfiguration, baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        super(configuration);
-        this.http = http ? http : window as any;
-        this.baseUrl = this.getBaseUrl("", baseUrl);
+    constructor(baseUrl?: string, token?: string) {
+        super(baseUrl, token);
     }
 
     /**
@@ -38,7 +33,7 @@ export class PagesClient extends ClientBase {
             }
         };
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
+        return this.fetch(url_, options_).then((_response: Response) => {
             return this.processGetAll(_response);
         });
     }
@@ -91,7 +86,7 @@ export class PagesClient extends ClientBase {
             }
         };
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
+        return this.fetch(url_, options_).then((_response: Response) => {
             return this.processGetById(_response);
         });
     }
@@ -145,7 +140,7 @@ export class PagesClient extends ClientBase {
             }
         };
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
+        return this.fetch(url_, options_).then((_response: Response) => {
             return this.processGetByUrl(_response);
         });
     }

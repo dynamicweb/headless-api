@@ -1,9 +1,22 @@
-import { ClientConfiguration } from "./ClientConfiguration";
-
 export class ClientBase {
-    constructor(configuration: ClientConfiguration) {}
+    private token: string;
+    protected baseUrl: string | undefined;
+    
+    constructor(baseUrl?: string, token?: string) {
+        this.baseUrl = baseUrl;
+        this.token = token;
+    }
 
-    getBaseUrl(input: string, baseUrl?: string){
-        return baseUrl || "";
+    protected fetch(url: RequestInfo, init?: RequestInit): Promise<Response> {
+        if (this.token) {
+            init = {
+                ...init,
+                headers: {
+                    ...init.headers,
+                    "Authorization": `Bearer ${this.token}`
+                }
+            }
+        }
+        return window.fetch(url, init);
     }
 }
